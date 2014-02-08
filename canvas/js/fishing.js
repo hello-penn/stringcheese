@@ -469,7 +469,7 @@ function FishingGame(domId) {
 			}
 			var a = this.x-x,
 				b = this.y-y;
-			return (Math.sqrt(a*a + b*b) < 20);
+			return (Math.sqrt(a*a + b*b) < 35);
 		};
 
 		/**
