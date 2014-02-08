@@ -994,7 +994,7 @@ function FishingGame(domId) {
 				// Play intro sequence.
 				_messageField.text('Get Ready').show();
 				_timeOut = setTimeout(function(){
-					_messageField.text('Fish!');
+					_messageField.text('Phish!');
 					_timeOut = setTimeout(runProgram, 1000);
 				}, 1500);
 
@@ -1124,7 +1124,7 @@ function FishingGame(domId) {
 					//**************************
 					//NEED TO GET VARIABLES FROM FISH TO FILL IN FUNCTION
 					//**************************
-					popQuestionUpdateScore("Subject: Good Fish", "Body", false);
+					popQuestionUpdateScore("Subject: Good Fish", "Body", false, "good1.png");
 					
 					if (points > 0) {
 						_sound.goodCatch();
@@ -1176,10 +1176,10 @@ function FishingGame(domId) {
 				 * 1103 inupdate:function() 
 				 * 
 				 */
-				function popQuestionUpdateScore (subject, body, isGood){
+				function popQuestionUpdateScore (subject, body, isGood, imageName){
 					//var answer = confirm('Is this a good or bad email?\n'+body);
 					_isGood = true;
-					_windowMessage = messageWindow(_thisGameDomID, "blah", _isGood);
+					_windowMessage = messageWindow(_thisGameDomID, "blah", _isGood, imageName);
 					_windowMessage.show();
 					//_timeOut.clearTimeout();
 					
@@ -1206,10 +1206,11 @@ function FishingGame(domId) {
 				/**
 				New function to create message window for when the fish pops up
 				*/
-				function messageWindow(parent, body, isGood){
+				function messageWindow(parent, body, isGood, imageName){
 					return {
 						view:$('<div/>')
 							.addClass('fishing-view fishing-message-window')
+							.css("background-image","url('" + imageName + "')")
 							.append(
 								$('<button/>')
 								.addClass('fishing-message-window-accept')
