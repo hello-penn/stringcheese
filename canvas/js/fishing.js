@@ -352,6 +352,7 @@ function FishingGame(domId) {
 			blocker:false,
 			hooked:false,
 			dead:false,
+			good:true,
 			speedX:0,
 			speedY:0,
 			frame:rect(0, 0, 1, 1),
@@ -424,6 +425,7 @@ function FishingGame(domId) {
 		this.index = index;
 		this.depth = index/Fish.count;
 		this.image = this.render();
+		if (index%2 == 0) this.good = false;
 	}
 	(function initFish(){
 		Fish.count = 15;
@@ -593,7 +595,7 @@ function FishingGame(domId) {
 			if (this.direction === 1) {
 				ctx.font = "30px Arial";
 				ctx.fillStyle = 'white';
-				ctx.fillText("sexy phish", -this.image.width+140,0);
+				ctx.fillText(this.good, -this.image.width+140,0);
 			}
 
 			if (this.dead) {
