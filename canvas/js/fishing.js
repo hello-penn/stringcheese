@@ -40,9 +40,11 @@ function FishingGame(domId) {
 		_sound,
 		_sprites,
 		_net,
-		_bounds = rect(0, 260, 1024, 440);
+		_isGood = true, // created new 
+		_bounds = rect(0, 260, 1024, 440), // modified this, used to have ';'' <Marco>
+		_windowMessage, // new variable for the window to display
+		_thisGameDomID; // new variable to keep track of the game
 
-	
 
 	/**
 	* Controller object for interfacing with the game's sound player.
@@ -424,7 +426,7 @@ function FishingGame(domId) {
 		this.image = this.render();
 	}
 	(function initFish(){
-		Fish.count = 7;
+		Fish.count = 15;
 		Fish.numPrize = 0;
 		Fish.allowedPrizes = 2;
 		Fish.prototype = new HookableObject();
@@ -587,12 +589,7 @@ function FishingGame(domId) {
 				// NORMAL FISH. Draw from colorized canvas.
 				ctx.drawImage(this.image, -this.image.width, -this.image.height/2);
 			}
-			//
-			if (this.direction === 1) {
-				ctx.font = "30px Arial";
-				ctx.fillStyle = 'white';
-				ctx.fillText("sexy phish", -this.image.width+140,0);
-			}
+
 			if (this.dead) {
 				// DEAD FISH. Draw in zapping _sprites.
 				r = this.rectZap;
@@ -608,7 +605,7 @@ function FishingGame(domId) {
 		*/
 		Fish.prototype.render = function() {
 			var canvas = $('<canvas/>'),
-				scale=3.55+(0.45*this.depth),
+				scale=0.55+(0.45*this.depth),
 				r = this.rectBasic,
 				cw = Math.round(r.width*scale),
 				ch = Math.round(r.height*scale),
@@ -650,7 +647,7 @@ function FishingGame(domId) {
 		this.height = this.frame.height;
 	}
 	(function initJellyfish(){
-		Jellyfish.count = 3;
+		Jellyfish.count = 5;
 		Jellyfish.prototype = new HookableObject();
 		Jellyfish.prototype.frame = rect(0, 0, 80, 105);
 		Jellyfish.prototype.speedPercent = 1;
@@ -855,6 +852,10 @@ function FishingGame(domId) {
 		};
 	}
 
+	
+
+
+
 	/**
 	* Creates a view controller for the outro screen.
 	*/
@@ -939,7 +940,7 @@ function FishingGame(domId) {
 					nfish=_hookables.length,
 					i;
 
-				Fish.allowedPrizes = 0;
+				Fish.allowedPrizes = 2;
 
 				// Reset all fish.
 				for (i=0; i < nfish; i++) {
@@ -1158,7 +1159,13 @@ function FishingGame(domId) {
 				 * 
 				 */
 				function popQuestionUpdateScore (subject, body, isGood){
-					var answer = confirm('Is this a good or bad email?\n'+body);
+					//var answer = confirm('Is this a good or bad email?\n'+body);
+					_isGood = true;
+					_windowMessage = messageWindow(_thisGameDomID, "blah", _isGood);
+					_windowMessage.show();
+					//_timeOut.clearTimeout();
+					
+					/*
 					if ((answer && isGood) || (!answer && !isGood)) {
 						_points = _points + 1;
 						_score.text( _points );
@@ -1166,6 +1173,10 @@ function FishingGame(domId) {
 						_points = _points - 1;
 						_score.text( _points );
 					}
+					*/
+
+					//alert("blah");
+					//_windowMessage.hide();
 					/*
 					if (isGood && answer) {
 						_points = _points + 1;
@@ -1173,7 +1184,74 @@ function FishingGame(domId) {
 					*/
 					
 				}
+
+				/**
+				New function to create message window for when the fish pops up
+				*/
+				function messageWindow(parent, body, isGood){
+					return {
+						view:$('<div/>')
+							.addClass('fishing-view fishing-message-window')
+							.append(
+								$('<button/>')
+								.addClass('fishing-message-window-accept')
+								.text('Accept!')
+								.click(function(){						
+									/*if (_isGood){
+										_points = _points + 1;
+									} else {
+										_points = _points - 1;
+									}*/
+									_points = _points + 1;
+									_score.text(_points);
+									_windowMessage.hide();
+									//_timeOut = setTimeout(function(){
+									//_messageField.text('Fish!');
+									/*
+									_timeOut = setTimeout(runProgram, 1000);
+									}, 1500);
+									_game.updateTimer();
+									//_game.update();
+									*/
+								})
+								)
+							.append(
+								$('<button/>')
+								.addClass('fishing-message-window-reject')
+								.text('Reject!')
+								.click(function(){
+									_windowMessage.hide();
+									_points = _points - 1;
+									_score.text(_points);
+									
+									//_timeOut = setTimeout(function(){
+									//_messageField.text('Fish!');
+									/*
+									_timeOut = setTimeout(runProgram, 1000);
+									}, 1500);
+									_game.updateTimer();
+									//_game.update();
+									*/
+								})
+								)		
+							.appendTo(parent)
+							.hide(),
+						show:function(){
+							this.view.show();
+							//_score.hide();
+						},
+						hide:function(){
+							this.view.hide();
+							//_score.show();
+						}
+					}
+				}
+
+
 			},
+
+
+			
 
 			/**
 			* Called upon each timer cycle.
@@ -1242,6 +1320,7 @@ function FishingGame(domId) {
 
 		// Main container
 		var dom = $('#'+domId);
+		_thisGameDomID = dom; // Updating the global variable I created at beginning
 		_intro = intro(dom);
 		_outro = outro(dom);
 		_net = net(dom);
