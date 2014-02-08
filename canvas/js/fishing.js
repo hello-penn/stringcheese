@@ -45,6 +45,9 @@ function FishingGame(domId) {
 		_windowMessage, // new variable for the window to display
 		_thisGameDomID; // new variable to keep track of the game
 
+	var goodEmails = ["hey0", "hey1", "hey2", "hey3", "hey5", "hey6", "hey7" ,"hey8", "hey9", "hey10"];
+	var badEmails = ["bey0", "bey1", "bey2", "bey3", "bey5", "bey6", "bey7" ,"bey8", "bey9", "bey10"];
+
 
 	/**
 	* Controller object for interfacing with the game's sound player.
@@ -425,12 +428,19 @@ function FishingGame(domId) {
 		this.index = index;
 		this.depth = index/Fish.count;
 		this.image = this.render();
-		if (index%2 == 0) this.good = false;
+		if (index%2 == 0) {
+			this.good = false;
+			this.subject = badEmails[index];
+		}
+		else {
+			this.subject = goodEmails[index];
+		}
 	}
 	(function initFish(){
 		Fish.count = 9;
 		Fish.numPrize = 0;
 		Fish.allowedPrizes = 0;
+		Fish.subject = "testSubject";
 		Fish.prototype = new HookableObject();
 		Fish.prototype.image = null;
 		Fish.prototype.direction = 1;
@@ -595,7 +605,7 @@ function FishingGame(domId) {
 			if (this.direction === 1) {
 				ctx.font = "30px Arial";
 				ctx.fillStyle = 'white';
-				ctx.fillText(this.good, -this.image.width+140,0);
+				ctx.fillText(this.subject, -this.image.width+140,0);
 			}
 
 			if (this.dead) {
