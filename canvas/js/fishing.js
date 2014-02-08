@@ -358,7 +358,7 @@ function FishingGame(domId) {
 			good:true,
 			speedX:0,
 			speedY:0,
-			frame:rect(0, 0, 1, 1),
+			frame:rect(0, 0, 17, 1),
 			imageX:0,
 			imageY:0,
 			rotation:0,
@@ -469,7 +469,7 @@ function FishingGame(domId) {
 			}
 			var a = this.x-x,
 				b = this.y-y;
-			return (Math.sqrt(a*a + b*b) < 35);
+			return (Math.sqrt(a*a + b*b) < 70);
 		};
 
 		/**
