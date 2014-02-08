@@ -70,6 +70,29 @@
 		top:668px;
 	}
 
+/* Message Window Screen -- NEW CSS CLASS <Marco>
+----------------------------------- */
+#fishing .fishing-message-window {
+	background:url("../media/intro.png") no-repeat center 131px;
+	text-align:center;
+}
+	#fishing .fishing-message-window  button {
+		top:350px;
+		text-align:center;
+	}
+	
+
+	#fishing .fishing-message-window  button.fishing-message-window-accept {
+		left:700px;
+		top:668px;
+	}
+		
+	#fishing .fishing-message-window  button.fishing-message-window-reject {
+		right:700px;
+		top:668px;
+	}
+		
+
 /* OUTRO Screen
 ----------------------------------- */
 #fishing .fishing-outro {
