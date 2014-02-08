@@ -424,7 +424,7 @@ function FishingGame(domId) {
 		this.image = this.render();
 	}
 	(function initFish(){
-		Fish.count = 15;
+		Fish.count = 7;
 		Fish.numPrize = 0;
 		Fish.allowedPrizes = 2;
 		Fish.prototype = new HookableObject();
@@ -587,7 +587,12 @@ function FishingGame(domId) {
 				// NORMAL FISH. Draw from colorized canvas.
 				ctx.drawImage(this.image, -this.image.width, -this.image.height/2);
 			}
-
+			//
+			if (this.direction === 1) {
+				ctx.font = "30px Arial";
+				ctx.fillStyle = 'white';
+				ctx.fillText("sexy phish", -this.image.width+140,0);
+			}
 			if (this.dead) {
 				// DEAD FISH. Draw in zapping _sprites.
 				r = this.rectZap;
@@ -603,7 +608,7 @@ function FishingGame(domId) {
 		*/
 		Fish.prototype.render = function() {
 			var canvas = $('<canvas/>'),
-				scale=0.55+(0.45*this.depth),
+				scale=3.55+(0.45*this.depth),
 				r = this.rectBasic,
 				cw = Math.round(r.width*scale),
 				ch = Math.round(r.height*scale),
@@ -645,7 +650,7 @@ function FishingGame(domId) {
 		this.height = this.frame.height;
 	}
 	(function initJellyfish(){
-		Jellyfish.count = 5;
+		Jellyfish.count = 3;
 		Jellyfish.prototype = new HookableObject();
 		Jellyfish.prototype.frame = rect(0, 0, 80, 105);
 		Jellyfish.prototype.speedPercent = 1;
@@ -934,7 +939,7 @@ function FishingGame(domId) {
 					nfish=_hookables.length,
 					i;
 
-				Fish.allowedPrizes = 2;
+				Fish.allowedPrizes = 0;
 
 				// Reset all fish.
 				for (i=0; i < nfish; i++) {
