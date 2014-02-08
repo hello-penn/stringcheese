@@ -994,7 +994,7 @@ function FishingGame(domId) {
 				// Play intro sequence.
 				_messageField.text('Get Ready').show();
 				_timeOut = setTimeout(function(){
-					_messageField.text('Fish!');
+					_messageField.text('Phish!');
 					_timeOut = setTimeout(runProgram, 1000);
 				}, 1500);
 
