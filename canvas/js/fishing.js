@@ -1214,6 +1214,7 @@ function FishingGame(domId) {
 							.append(
 								$('<button/>')
 								.addClass('fishing-message-window-accept')
+								.css("background-image","url('media/accept.png')")
 								.text('Accept!')
 								.click(function(){						
 									/*if (_isGood){
@@ -1241,6 +1242,7 @@ function FishingGame(domId) {
 							.append(
 								$('<button/>')
 								.addClass('fishing-message-window-reject')
+								.css("background-image","url('media/reject.png')")
 								.text('Reject!')
 								.click(function(){
 									_windowMessage.hide();
