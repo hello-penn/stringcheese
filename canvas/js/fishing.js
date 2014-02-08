@@ -1210,7 +1210,7 @@ function FishingGame(domId) {
 					return {
 						view:$('<div/>')
 							.addClass('fishing-view fishing-message-window')
-							.css("background-image","url('" + imageName + "')")
+							.css("background-image","url('media/" + imageName + "')")
 							.append(
 								$('<button/>')
 								.addClass('fishing-message-window-accept')
