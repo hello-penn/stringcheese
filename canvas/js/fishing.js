@@ -428,7 +428,7 @@ function FishingGame(domId) {
 		if (index%2 == 0) this.good = false;
 	}
 	(function initFish(){
-		Fish.count = 15;
+		Fish.count = 9;
 		Fish.numPrize = 0;
 		Fish.allowedPrizes = 0;
 		Fish.prototype = new HookableObject();
@@ -948,7 +948,7 @@ function FishingGame(domId) {
 					nfish=_hookables.length,
 					i;
 
-				Fish.allowedPrizes = 2;
+				Fish.allowedPrizes = 0;
 
 				// Reset all fish.
 				for (i=0; i < nfish; i++) {
