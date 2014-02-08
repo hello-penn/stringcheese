@@ -496,7 +496,7 @@ function FishingGame(domId) {
 			if (this.prize) {
 				Fish.numPrize--;
 			}
-			this.prize = (this.index >= Fish.count-Fish.allowedPrizes && Fish.numPrize < Fish.allowedPrizes && Math.random() > 0.5);
+			//this.prize = (this.index >= Fish.count-Fish.allowedPrizes && Fish.numPrize < Fish.allowedPrizes && Math.random() > 0.5);
 			if (this.prize) {
 				Fish.numPrize++;
 			}
