@@ -46,7 +46,22 @@ function FishingGame(domId) {
 		_thisGameDomID; // new variable to keep track of the game
 
 	var goodEmails = ["hey0", "hey1", "hey2", "hey3", "hey5", "hey6", "hey7" ,"hey8", "hey9", "hey10"];
-	var badEmails = ["bey0", "bey1", "bey2", "bey3", "bey5", "bey6", "bey7" ,"bey8", "bey9", "bey10"];
+	var badEmails = ["Your online~account is~locked",
+					"Your Apple~ID will~expire.",
+					"We are updating~all webmail account~for spam protection",
+					"IT Service Desk",
+					"Insufficient Funds~Notice",
+					"Notice of~Tax Return",
+					"New Message from~Chase Online(SM)",
+					"You have received~a secure message~from Bank of Amerrica",
+					"Message From~Micorosoft Helpdesk:~Do This Now",
+					"Library Account",
+					"Validate Spam~Protection",
+					"Re-activate account",
+					"Vital document",
+					"Important",
+					"WARNING ALERT !!!",
+					"** Online Alert !"];
 
 
 	/**
@@ -603,9 +618,14 @@ function FishingGame(domId) {
 			}
 
 			if (this.direction === 1) {
-				ctx.font = "30px Arial";
+				ctx.font = "20px Arial";
 				ctx.fillStyle = 'white';
-				ctx.fillText(this.subject, -this.image.width+140,0);
+				var textHeight = -20;
+				var splitText = this.subject.split("~");
+				for (var i = 0; i < splitText.length; i++) {
+					ctx.fillText(splitText[i], -this.image.width+140,textHeight);
+					textHeight += 20;
+				}
 			}
 
 			if (this.dead) {
