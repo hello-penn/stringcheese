@@ -1259,6 +1259,8 @@ function FishingGame(domId) {
 									} else {
 										_points = _points - 1;
 										_wrongMessageWindow = whyWrongWindow(parent,isGood, imageWhyWrong);
+
+
 										_wrongMessageWindow.show();
 									}
 									_score.text(_points);
