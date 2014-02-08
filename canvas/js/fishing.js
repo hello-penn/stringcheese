@@ -46,17 +46,7 @@ function FishingGame(domId) {
 		_wrongMessageWindow, // new variable for the window to display
 		_thisGameDomID; // new variable to keep track of the game
 
-	var goodEmails = ["South Carolina~Tax Information", 
-                      "Bank of America Alert:~Irregular Credit Card Activity",
-                      "hey1",
-                      "hey2",
-                      "hey3",
-                      "hey5",
-                      "hey6",
-                      "hey7",
-                      "hey8",
-                      "hey9",
-                      "hey10"];
+	var goodEmails = ["hey0", "hey1", "hey2", "hey3", "hey5", "hey6", "hey7" ,"hey8", "hey9", "hey10"];
 	var badEmails = ["Your online~account is~locked",
 					"Your Apple~ID will~expire.",
 					"We are updating~all webmail account~for spam protection",
@@ -1235,7 +1225,7 @@ function FishingGame(domId) {
 										_points = _points + 1;
 									} else {
 										_points = _points - 1;
-										_wrongMessageWindow = whyWrongWindow(parent, body, isGood, "reasonGood.png");
+										_wrongMessageWindow = whyWrongWindow(parent, body, isGood, imageWhyWrong);
 										_wrongMessageWindow.show();
 									}
 									_score.text(_points);
@@ -1253,7 +1243,7 @@ function FishingGame(domId) {
 										_points = _points + 1;
 									} else {
 										_points = _points - 1;
-										_wrongMessageWindow = whyWrongWindow(parent, body, isGood, imageWhyWrong);
+										_wrongMessageWindow = whyWrongWindow(parent, body, isGood, "reasonGood.png");
 										_wrongMessageWindow.show();
 									}
 									_score.text(_points);
