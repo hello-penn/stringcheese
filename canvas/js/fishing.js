@@ -46,8 +46,8 @@ function FishingGame(domId) {
 		_wrongMessageWindow, // new variable for the window to display
 		_thisGameDomID; // new variable to keep track of the game
 
-	var goodEmails = ["hey0", "hey1", "hey2", "hey3", "hey5", "hey6", "hey7" ,"hey8", "hey9", "hey10"];
-	var badEmails = ["Your online~account is~locked",
+	var goodSubject = ["hey0", "hey1", "hey2", "hey3", "hey5", "hey6", "hey7" ,"hey8", "hey9", "hey10"];
+	var badSubject = ["Your online~account is~locked",
 					"Your Apple~ID will~expire.",
 					"We are updating~all webmail account~for spam protection",
 					"IT Service Desk",
@@ -63,6 +63,15 @@ function FishingGame(domId) {
 					"Important",
 					"WARNING ALERT !!!",
 					"** Online Alert !"];
+
+	var goodEmails = ["good1.png", "good2.png", "good3.png", "good4.png", "good5.png"];
+	var badEmails = ["phish1.png", "phish2.png", "phish3.png", "phish4.png", "phish5.png", "phish6.png", "phish7.png",
+	"phish8.png", "phish9.png", "phish10.png", "phish11.png", "phish12.png", "phish13.png", "phish14.png", "phish15.png", "phish16.png"];
+
+	var reasonBad = ["reasonBad1.png", "reasonBad2.png", "reasonBad3.png", "reasonBad4.png",
+	 "reasonBad5.png", "reasonBad6.png", "reasonBad7.png", "reasonBad8.png", 
+	 "reasonBad9.png", "reasonBad10.png", "reasonBad11.png", "reasonBad12.png",
+	 "reasonBad13.png", "reasonBad14.png", "reasonBad15.png", "reasonBad16.png"]
 
 
 	/**
@@ -446,10 +455,15 @@ function FishingGame(domId) {
 		this.image = this.render();
 		if (index%2 == 0) {
 			this.good = false;
-			this.subject = badEmails[index];
+			this.subject = badSubject[index];
+			this.reason = reasonBad[index];
+			this.email = badEmails[index];
 		}
 		else {
-			this.subject = goodEmails[index];
+			this.good = true;
+			this.subject = goodSubject[index];
+			this.reason = null;
+			this.email = goodEmails[index];
 		}
 	}
 	(function initFish(){
@@ -1137,6 +1151,7 @@ function FishingGame(domId) {
 				this.hook.y < _target.y+_target.height &&
 				this.hook.x < _target.x+_target.width &&
 				this.hook.x > _target.x) {
+					popQuestionUpdateScore(this.hook.payload.good, this.hook.payload.email, this.hook.payload.reason);
 					var points = this.hook.catchObject() * _multiplier;
 					//_points += points;
 					_score.text( _points );
@@ -1145,7 +1160,7 @@ function FishingGame(domId) {
 					//**************************
 					//NEED TO GET VARIABLES FROM FISH TO FILL IN FUNCTION
 					//**************************
-					popQuestionUpdateScore("Subject: Good Fish", "Body", fish.good, "good1.png", "phish1.png");
+					
 					
 					if (points > 0) {
 						_sound.goodCatch();
@@ -1197,17 +1212,17 @@ function FishingGame(domId) {
 				 * 1103 inupdate:function() 
 				 * 
 				 */
-				function popQuestionUpdateScore (subject, body, isGood, imageName, imageWhyWrong){
+				function popQuestionUpdateScore (isGood, imageName, imageWhyWrong){
 					//var answer = confirm('Is this a good or bad email?\n'+body);
-					intro(_thisGameDomID);
-					_windowMessage = messageWindow(_thisGameDomID, "blah", _isGood, imageName, imageWhyWrong);
+					//intro(_thisGameDomID);
+					_windowMessage = messageWindow(_thisGameDomID, isGood, imageName, imageWhyWrong);
 					_windowMessage.show();
 				}
 
 				/**
 				New function to create message window for when the fish pops up
 				*/
-				function messageWindow(parent, body, isGood, imageName, imageWhyWrong){
+				function messageWindow(parent, isGood, imageName, imageWhyWrong){
 					
 					return {
 						view:$('<div/>')
@@ -1225,7 +1240,7 @@ function FishingGame(domId) {
 										_points = _points + 1;
 									} else {
 										_points = _points - 1;
-										_wrongMessageWindow = whyWrongWindow(parent, body, isGood, imageWhyWrong);
+										_wrongMessageWindow = whyWrongWindow(parent, isGood, imageWhyWrong);
 										_wrongMessageWindow.show();
 									}
 									_score.text(_points);
@@ -1243,7 +1258,7 @@ function FishingGame(domId) {
 										_points = _points + 1;
 									} else {
 										_points = _points - 1;
-										_wrongMessageWindow = whyWrongWindow(parent, body, isGood, imageWhyWrong);
+										_wrongMessageWindow = whyWrongWindow(parent,isGood, imageWhyWrong);
 										_wrongMessageWindow.show();
 									}
 									_score.text(_points);
@@ -1260,7 +1275,7 @@ function FishingGame(domId) {
 					}
 				}
 
-				function whyWrongWindow(parent, body, isGood, imageName){
+				function whyWrongWindow(parent,isGood, imageName){
 					return {
 						view:$('<div/>')
 							.addClass('fishing-view fishing-message-window')
