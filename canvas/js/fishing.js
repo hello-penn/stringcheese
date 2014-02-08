@@ -1220,7 +1220,11 @@ function FishingGame(domId) {
 									} else {
 										_points = _points - 1;
 									}*/
-									_points = _points + 1;
+									if (isGood){
+										_points = _points + 1;
+									} else {
+										_points = _points - 1;
+									}
 									_score.text(_points);
 									_windowMessage.hide();
 									//_timeOut = setTimeout(function(){
@@ -1239,7 +1243,11 @@ function FishingGame(domId) {
 								.text('Reject!')
 								.click(function(){
 									_windowMessage.hide();
-									_points = _points - 1;
+									if (!isGood){
+										_points = _points + 1;
+									} else {
+										_points = _points - 1;
+									}
 									_score.text(_points);
 									
 									//_timeOut = setTimeout(function(){
