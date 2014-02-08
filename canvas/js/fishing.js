@@ -917,7 +917,7 @@ function FishingGame(domId) {
 			_points = 0,
 			_multiplier = 1,
 			_seconds = 0,
-			_secondsMax = 30,
+			_secondsMax = 70,
 			_hookables = [], // Array of hookable Fish & Jellyfish objects.
 			_target = rect(545, 175, 105, 40), // Rect of the drag-to target (net).
 			_frameRate, // setInterval ID of the framerate interval.
