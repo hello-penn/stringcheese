@@ -46,7 +46,7 @@ function FishingGame(domId) {
 		_wrongMessageWindow, // new variable for the window to display
 		_thisGameDomID; // new variable to keep track of the game
 
-	var goodSubject = ["hey0", "hey1", "hey2", "hey3", "hey5", "hey6", "hey7" ,"hey8", "hey9", "hey10"];
+	var goodSubject = ["hey0", "Amazon Support", "hey2", "Online Banking Alert", "hey5", "zeus36264751~wants to share~a file", "hey7" ,"Living Social~Pending Deal", "hey9", "hey10"];
 	var badSubject = ["Your online~account is~locked",
 					"Your Apple~ID will~expire.",
 					"We are updating~all webmail account~for spam protection",
@@ -64,7 +64,7 @@ function FishingGame(domId) {
 					"WARNING ALERT !!!",
 					"** Online Alert !"];
 
-	var goodEmails = ["good1.png", "good2.png", "good3.png", "good4.png", "good5.png"];
+	var goodEmails = [null,"good1.png", null, "good2.png", null, "good3.png", null, "good4.png", null, "good5.png"];
 	var badEmails = ["phish1.png", "phish2.png", "phish3.png", "phish4.png", "phish5.png", "phish6.png", "phish7.png",
 	"phish8.png", "phish9.png", "phish10.png", "phish11.png", "phish12.png", "phish13.png", "phish14.png", "phish15.png", "phish16.png"];
 
@@ -638,7 +638,7 @@ function FishingGame(domId) {
 				var textHeight = -20;
 				var splitText = this.subject.split("~");
 				for (var i = 0; i < splitText.length; i++) {
-					ctx.fillText(splitText[i], -this.image.width+140,textHeight);
+					ctx.fillText(splitText[i], -this.image.width+140,textHeight+10);
 					textHeight += 20;
 				}
 			}
