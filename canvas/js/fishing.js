@@ -43,6 +43,7 @@ function FishingGame(domId) {
 		_isGood = true, // created new 
 		_bounds = rect(0, 260, 1024, 440), // modified this, used to have ';'' <Marco>
 		_windowMessage, // new variable for the window to display
+		_wrongMessageWindow, // new variable for the window to display
 		_thisGameDomID; // new variable to keep track of the game
 
 	var goodEmails = ["hey0", "hey1", "hey2", "hey3", "hey5", "hey6", "hey7" ,"hey8", "hey9", "hey10"];
@@ -373,7 +374,7 @@ function FishingGame(domId) {
 			good:true,
 			speedX:0,
 			speedY:0,
-			frame:rect(0, 0, 1, 1),
+			frame:rect(0, 0, 17, 1),
 			imageX:0,
 			imageY:0,
 			rotation:0,
@@ -484,7 +485,7 @@ function FishingGame(domId) {
 			}
 			var a = this.x-x,
 				b = this.y-y;
-			return (Math.sqrt(a*a + b*b) < 35);
+			return (Math.sqrt(a*a + b*b) < 70);
 		};
 
 		/**
@@ -937,7 +938,7 @@ function FishingGame(domId) {
 			_points = 0,
 			_multiplier = 1,
 			_seconds = 0,
-			_secondsMax = 30,
+			_secondsMax = 70,
 			_hookables = [], // Array of hookable Fish & Jellyfish objects.
 			_target = rect(545, 175, 105, 40), // Rect of the drag-to target (net).
 			_frameRate, // setInterval ID of the framerate interval.
@@ -1144,7 +1145,7 @@ function FishingGame(domId) {
 					//**************************
 					//NEED TO GET VARIABLES FROM FISH TO FILL IN FUNCTION
 					//**************************
-					popQuestionUpdateScore("Subject: Good Fish", "Body", false, "good1.png");
+					popQuestionUpdateScore("Subject: Good Fish", "Body", fish.good, "good1.png", "phish1.png");
 					
 					if (points > 0) {
 						_sound.goodCatch();
@@ -1196,71 +1197,45 @@ function FishingGame(domId) {
 				 * 1103 inupdate:function() 
 				 * 
 				 */
-				function popQuestionUpdateScore (subject, body, isGood, imageName){
+				function popQuestionUpdateScore (subject, body, isGood, imageName, imageWhyWrong){
 					//var answer = confirm('Is this a good or bad email?\n'+body);
-					_isGood = true;
-					_windowMessage = messageWindow(_thisGameDomID, "blah", _isGood, imageName);
+					intro(_thisGameDomID);
+					_windowMessage = messageWindow(_thisGameDomID, "blah", _isGood, imageName, imageWhyWrong);
 					_windowMessage.show();
-					//_timeOut.clearTimeout();
-					
-					/*
-					if ((answer && isGood) || (!answer && !isGood)) {
-						_points = _points + 1;
-						_score.text( _points );
-					} else {
-						_points = _points - 1;
-						_score.text( _points );
-					}
-					*/
-
-					//alert("blah");
-					//_windowMessage.hide();
-					/*
-					if (isGood && answer) {
-						_points = _points + 1;
-					} 
-					*/
-					
 				}
 
 				/**
 				New function to create message window for when the fish pops up
 				*/
-				function messageWindow(parent, body, isGood, imageName){
+				function messageWindow(parent, body, isGood, imageName, imageWhyWrong){
+					
 					return {
 						view:$('<div/>')
 							.addClass('fishing-view fishing-message-window')
-							.css("background-image","url('" + imageName + "')")
+							.css("background-image","url('media/" + imageName + "')")
+
 							.append(
 								$('<button/>')
 								.addClass('fishing-message-window-accept')
+								.css("background-image","url('media/accept.png')")
 								.text('Accept!')
 								.click(function(){						
-									/*if (_isGood){
-										_points = _points + 1;
-									} else {
-										_points = _points - 1;
-									}*/
+									_windowMessage.hide()
 									if (isGood){
 										_points = _points + 1;
 									} else {
 										_points = _points - 1;
+										_wrongMessageWindow = whyWrongWindow(parent, body, isGood, imageWhyWrong);
+										_wrongMessageWindow.show();
 									}
 									_score.text(_points);
-									_windowMessage.hide();
-									//_timeOut = setTimeout(function(){
-									//_messageField.text('Fish!');
-									/*
-									_timeOut = setTimeout(runProgram, 1000);
-									}, 1500);
-									_game.updateTimer();
-									//_game.update();
-									*/
+									
 								})
 								)
 							.append(
 								$('<button/>')
 								.addClass('fishing-message-window-reject')
+								.css("background-image","url('media/reject.png')")
 								.text('Reject!')
 								.click(function(){
 									_windowMessage.hide();
@@ -1268,31 +1243,49 @@ function FishingGame(domId) {
 										_points = _points + 1;
 									} else {
 										_points = _points - 1;
+										_wrongMessageWindow = whyWrongWindow(parent, body, isGood, imageWhyWrong);
+										_wrongMessageWindow.show();
 									}
 									_score.text(_points);
-									
-									//_timeOut = setTimeout(function(){
-									//_messageField.text('Fish!');
-									/*
-									_timeOut = setTimeout(runProgram, 1000);
-									}, 1500);
-									_game.updateTimer();
-									//_game.update();
-									*/
 								})
 								)		
 							.appendTo(parent)
 							.hide(),
 						show:function(){
 							this.view.show();
-							//_score.hide();
 						},
 						hide:function(){
 							this.view.hide();
-							//_score.show();
 						}
 					}
 				}
+
+				function whyWrongWindow(parent, body, isGood, imageName){
+					return {
+						view:$('<div/>')
+							.addClass('fishing-view fishing-message-window')
+							.css("background-image","url('media/" + imageName + "')")
+							.append(
+								$('<button/>')
+								.addClass('fishing-message-window-accept')
+								.css("background-image","url('media/accept.png')")
+								.text('Accept!')
+								.click(function(){						
+									_wrongMessageWindow.hide();									
+								})
+								)	
+							.appendTo(parent)
+							.hide(),
+						show:function(){
+							this.view.show();
+						},
+						hide:function(){
+							this.view.hide();
+						}
+					}
+				}
+
+
 
 
 			},
